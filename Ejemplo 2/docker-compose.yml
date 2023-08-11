@@ -1,0 +1,27 @@
+version: '3'
+
+services:
+  database:
+    image: 'mysql'
+    container_name: "database_container"
+    environment:
+      MYSQL_ROOT_PASSWORD: secret
+    volumes:
+      - mysql-data:/var/lib/mysql
+    ports:
+      - "33061:3306"
+
+  backend:
+    image: 'jdveloper/backend'
+    container_name: "backend_container"
+    environment:
+      DB_USER: root
+      DB_PASSWORD: secret
+      DB_HOST: database
+      DB_PORT: 33061
+      DB_NAME: ejemplo
+    ports:
+      - "8000:8000"
+
+volumes:
+  mysql-data:
